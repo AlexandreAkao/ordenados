@@ -29,7 +29,7 @@ function CounterPlayers({ roomId }: CounterPlayersProps) {
           event: "*",
           schema: "public",
           table: "player",
-          filter: `room_id=eq.${roomId}`,
+          filter: `room_number=eq.${roomId}`,
         },
         async () => {
           await fetchCount();
