@@ -12,6 +12,7 @@ type CounterPlayersProps = {
 function CounterPlayers({ roomId }: CounterPlayersProps) {
   const [count, setCount] = useState(0);
   const supabase = createClient();
+  const channel = supabase.channel("counter-player");
 
   const fetchCount = useCallback(async () => {
     const countPlayer = (await getCountPlayersByRoom(roomId)) ?? 0;
@@ -21,14 +22,14 @@ function CounterPlayers({ roomId }: CounterPlayersProps) {
   useEffect(() => {
     fetchCount();
 
-    const channel = supabase
-      .channel("player")
+    channel
       .on(
         "postgres_changes",
         {
           event: "*",
           schema: "public",
           table: "player",
+          filter: `room_id=eq.${roomId}`,
         },
         async () => {
           await fetchCount();
@@ -39,7 +40,7 @@ function CounterPlayers({ roomId }: CounterPlayersProps) {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [fetchCount, roomId, supabase]);
+  }, [channel, fetchCount, roomId, supabase]);
 
   return <div>Count: {count}</div>;
 }

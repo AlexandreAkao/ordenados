@@ -12,6 +12,7 @@ type PlayerNumberProps = {
 function PlayerNumber({ token }: PlayerNumberProps) {
   const [player, setPlayer] = useState<IPlayer>();
   const supabase = createClient();
+  const channel = supabase.channel("dealer");
 
   const fetchPlayer = useCallback(async () => {
     const fetchPlayer = await getPlayerByToken(token);
@@ -21,14 +22,14 @@ function PlayerNumber({ token }: PlayerNumberProps) {
   useEffect(() => {
     fetchPlayer();
 
-    const channel = supabase
-      .channel("player")
+    channel
       .on(
         "postgres_changes",
         {
           event: "*",
           schema: "public",
           table: "player",
+          filter: `token=eq.${token}`,
         },
         async () => {
           await fetchPlayer();
@@ -39,7 +40,7 @@ function PlayerNumber({ token }: PlayerNumberProps) {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [fetchPlayer, supabase, token]);
+  }, [channel, fetchPlayer, supabase, token]);
 
   return <div>Numero: {player?.number}</div>;
 }
