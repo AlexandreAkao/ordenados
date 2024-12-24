@@ -3,6 +3,7 @@ import { setupRoom } from "@/app/room/[roomId]/actions";
 import CounterPlayers from "@/app/_components/CounterPlayers";
 import DealButton from "@/app/_components/DealButton";
 import PlayerNumber from "@/app/_components/PlayerNumber";
+import Card from "@/app/_components/Card";
 
 type RoomProps = {
   params: Promise<{ roomId: string }>;
@@ -20,6 +21,7 @@ export default async function Room({ params }: RoomProps) {
       <PlayerNumber token={token.toString()} />
       <CounterPlayers roomId={roomId} />
       <DealButton roomId={roomId} />
+      <Card />
     </div>
   );
 }
