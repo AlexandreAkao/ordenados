@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { getPlayerByToken } from "@/app/repositories/playerRepository";
 import { IPlayer } from "@/models/player";
@@ -11,8 +11,8 @@ type PlayerNumberProps = {
 
 function PlayerNumber({ token }: PlayerNumberProps) {
   const [player, setPlayer] = useState<IPlayer>();
-  const supabase = createClient();
-  const channel = supabase.channel("dealer");
+  const supabase = useMemo(() => createClient(), []);
+  const channel = useMemo(() => supabase.channel("dealer"), [supabase]);
 
   const fetchPlayer = useCallback(async () => {
     const fetchPlayer = await getPlayerByToken(token);
@@ -22,22 +22,21 @@ function PlayerNumber({ token }: PlayerNumberProps) {
   useEffect(() => {
     fetchPlayer();
 
-    channel
+    const subscription = channel
       .on(
         "postgres_changes",
         {
-          event: "*",
+          event: "UPDATE",
           schema: "public",
           table: "player",
           filter: `token=eq.${token}`,
         },
-        async () => {
-          await fetchPlayer();
-        }
+        fetchPlayer
       )
       .subscribe();
 
     return () => {
+      subscription.unsubscribe();
       supabase.removeChannel(channel);
     };
   }, [channel, fetchPlayer, supabase, token]);
