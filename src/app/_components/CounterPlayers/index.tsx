@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { Users } from "lucide-react";
 
 import { getCountPlayersByRoom } from "@/app/repositories/playerRepository";
 import { createClient } from "@/utils/supabase/client";
@@ -41,7 +42,15 @@ function CounterPlayers({ roomId }: CounterPlayersProps) {
     };
   }, [channel, fetchCount, roomId, supabase]);
 
-  return <div>Count: {count}</div>;
+  return (
+    <div className="flex items-center gap-2 text-green-600">
+      <div className="relative">
+        <Users className="h-5 w-5" />
+        <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-green-500 animate-pulse" />
+      </div>
+      <span className="text-sm font-medium">{count} online</span>
+    </div>
+  );
 }
 
 export default CounterPlayers;
