@@ -18,7 +18,7 @@ export default async function Room({ params }: RoomProps) {
   return (
     <div className="min-h-screen flex items-center">
       <main className="w-full max-w-5xl mx-auto h-full flex flex-col items-center gap-4">
-        <InfoSystemProvider>
+        <InfoSystemProvider token={token}>
           <PlayerCard roomId={roomId} token={token} userName={userName} />
           <DealButton roomId={roomId} />
         </InfoSystemProvider>

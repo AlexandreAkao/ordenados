@@ -1,15 +1,38 @@
 "use client";
-import { createContext, ReactNode, useContext, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import useInterval from "@/app/_hooks/useTimeout";
+import { updatePlayerLastActive } from "@/app/repositories/playerRepository";
 
 interface IInfoSystemData {
   isLoading: boolean;
   setIsLoading: (value: boolean) => void;
 }
 
+type InfoSystemProviderProps = {
+  children: ReactNode;
+  token: string;
+};
+
 const InfoSystemContext = createContext<IInfoSystemData>({} as IInfoSystemData);
 
-export const InfoSystemProvider = ({ children }: { children: ReactNode }) => {
-  const [isLoading, setIsLoading] = useState(false);
+export const InfoSystemProvider = ({
+  children,
+  token,
+}: InfoSystemProviderProps) => {
+  const ONE_MINUTE = 1000 * 60;
+  const [isLoading, setIsLoading] = useState(true);
+  const { clear } = useInterval(() => {
+    updatePlayerLastActive(new Date(), token);
+  }, ONE_MINUTE);
+  useEffect(() => {
+    return clear;
+  }, [clear]);
 
   return (
     <InfoSystemContext.Provider

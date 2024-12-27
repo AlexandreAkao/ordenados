@@ -2,7 +2,7 @@
 
 import {
   createPlayer,
-  updatePlayer,
+  updatePlayerRoomNumber,
 } from "@/app/repositories/playerRepository";
 import { createRoom } from "@/app/repositories/roomRepository";
 import { createClient } from "@/utils/supabase/server";
@@ -30,7 +30,7 @@ export async function createOrGetPlayer(roomId: string) {
   }
 
   if (data.room_number !== roomId) {
-    return await updatePlayer(roomId, userToken?.value ?? "");
+    return await updatePlayerRoomNumber(roomId, userToken?.value ?? "");
   }
 
   return data;

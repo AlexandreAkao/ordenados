@@ -20,12 +20,30 @@ export async function createPlayer(
   return data;
 }
 
-export async function updatePlayer(roomNumber: string, token: string) {
+export async function updatePlayerRoomNumber(
+  roomNumber: string,
+  token: string
+) {
   const supabase = createClient();
 
   const { data, error } = await supabase
     .from("player")
     .update({ room_number: roomNumber })
+    .eq("token", token);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
+
+export async function updatePlayerLastActive(lastActive: Date, token: string) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from("player")
+    .update({ last_active: lastActive })
     .eq("token", token);
 
   if (error) {

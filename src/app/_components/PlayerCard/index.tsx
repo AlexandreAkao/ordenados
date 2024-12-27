@@ -39,7 +39,7 @@ function PlayerCard({ roomId, token, userName }: PlayerCardProps) {
           <CardHeader className="flex flex-row items-center justify-between border-b border-gray-100 pb-4">
             <div className="flex items-center gap-2">
               <RandomEmoji />
-              <span className="font-medium text-gray-700 text-ellipsis overflow-hidden max-w-52">
+              <span className="font-medium text-gray-700 text-ellipsis overflow-hidden max-w-52 text-nowrap">
                 {userName}
               </span>
             </div>
