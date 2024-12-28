@@ -16,9 +16,9 @@
   }
 
   .rotate-y-180 {
-    transform: rotateY(180deg);
-    -webkit-transform: rotateY(180deg);
-    -moz-transform: rotateY(180deg);
+    transform: rotateY(180deg) translateZ(1px);
+    -webkit-transform: rotateY(180deg) translateZ(1px);
+    -moz-transform: rotateY(180deg) translateZ(1px);
   }
 
   .backface-hidden {
