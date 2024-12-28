@@ -245,9 +245,9 @@ export const emojiList = [
   "🧳",
 ];
 
-function RandomEmoji() {
+function getRandomEmoji() {
   const randomIndex = Math.floor(Math.random() * emojiList.length);
-  return <span>{emojiList[randomIndex]}</span>;
+  return emojiList[randomIndex];
 }
 
-export default RandomEmoji;
+export default getRandomEmoji;
