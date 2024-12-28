@@ -23,7 +23,7 @@
 
   .backface-hidden {
     backface-visibility: hidden;
-    -webkit-backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden;
     -moz-backface-visibility: hidden;
   }
 }

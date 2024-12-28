@@ -35,7 +35,7 @@ function PlayerCard({ roomId, token, userName }: PlayerCardProps) {
         )}
         onClick={handleFlip}
       >
-        <Card className="absolute w-full h-full max-w-md bg-white/80 backdrop-blur shadow-xl border-0 flex flex-col">
+        <Card className="absolute w-full h-full max-w-md bg-slate-50 backdrop-blur shadow-xl border-0 flex flex-col">
           <CardHeader className="flex flex-row items-center justify-between border-b border-gray-100 pb-4">
             <div className="flex items-center gap-2">
               <RandomEmoji />
@@ -45,7 +45,7 @@ function PlayerCard({ roomId, token, userName }: PlayerCardProps) {
             </div>
             <CounterPlayers roomId={roomId} />
           </CardHeader>
-          <div className="text-center py-2 px-4 bg-gray-100">
+          <div className="text-center py-2 px-4 bg-gray-200">
             <h2 className="text-xl font-semibold text-gray-800">
               Sala {roomId}
             </h2>
@@ -58,7 +58,7 @@ function PlayerCard({ roomId, token, userName }: PlayerCardProps) {
             clique para virar
           </div>
         </Card>
-        <div className="rounded-2xl absolute w-full h-full rotate-y-180 backface-hidden shadow-xl">
+        <div className="rounded-2xl absolute w-full h-full rotate-y-180 backface-hidden shadow-xl translate-z-0">
           <Card className="absolute bg-zinc-900 w-full h-full max-w-md shadow-xl border-0 flex flex-col">
             <CardContent className="flex-1 flex flex-col items-center justify-center p-8">
               <Image
